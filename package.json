@@ -1,0 +1,15 @@
+{
+    "name": "com.mtb-game.modkit",
+    "version": "0.0.1",
+    "displayName": "Modkit",
+    "description": "Official Modkit",
+    "unity": "2020.3",
+   "keywords": [
+      "modkit"
+    ],
+    "author": {
+      "name": "Lucas Löffel",
+      "email": "lucas@loeffel.io",
+      "url": "https://github.com/loeffel-io"
+    }
+  }
