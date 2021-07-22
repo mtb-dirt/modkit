@@ -40,7 +40,7 @@ namespace GroundTerrain
             var terrain = new TerrainData {heightmapResolution = _resolution};
             var terrainObject = Terrain.CreateTerrainGameObject(terrain);
 
-            Undo.RegisterCreatedObjectUndo(terrainObject, "Revert Terrain");
+            Undo.RegisterCreatedObjectUndo(terrainObject, "Terrain");
 
             var collider = Selection.activeGameObject.GetComponent<MeshCollider>();
             CleanUp cleanUp = null;
