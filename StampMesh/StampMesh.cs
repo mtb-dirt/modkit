@@ -80,10 +80,11 @@ namespace StampMesh
             tMax.x = (colliderBounds.max.x - terrainPos.x) / terrainSize.x;
             tMax.y = (colliderBounds.max.z - terrainPos.z) / terrainSize.z;
 
-            var minIndexX = Mathf.FloorToInt(tMin.x * terrainData.heightmapResolution);
-            var minIndexY = Mathf.FloorToInt(tMin.y * terrainData.heightmapResolution);
-            var maxIndexX = Mathf.CeilToInt(tMax.x * terrainData.heightmapResolution);
-            var maxIndexY = Mathf.CeilToInt(tMax.y * terrainData.heightmapResolution);
+            var saftyMargin = 10;
+            var minIndexX = Mathf.FloorToInt(tMin.x * terrainData.heightmapResolution - saftyMargin);
+            var minIndexY = Mathf.FloorToInt(tMin.y * terrainData.heightmapResolution - saftyMargin);
+            var maxIndexX = Mathf.CeilToInt(tMax.x * terrainData.heightmapResolution + saftyMargin);
+            var maxIndexY = Mathf.CeilToInt(tMax.y * terrainData.heightmapResolution + saftyMargin);
 
             minIndexX = Mathf.Clamp(minIndexX, 0, terrainData.heightmapResolution - 1);
             minIndexY = Mathf.Clamp(minIndexY, 0, terrainData.heightmapResolution - 1);
@@ -120,7 +121,7 @@ namespace StampMesh
                     {
                         newHeight = hit.point.y - strength;
                     }
-                    
+
                     Debug.Log(strength);
 
                     if (_additive)
