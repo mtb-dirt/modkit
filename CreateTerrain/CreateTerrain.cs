@@ -1,13 +1,13 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace GroundTerrain
+namespace CreateTerrain
 {
     public class GroundTerrain : EditorWindow
     {
         private int _resolution = 2049;
 
-        [MenuItem("MTB Dirt/Terrain/Ground", false, 2000)]
+        [MenuItem("MTB Dirt/Terrain/Create terrain", false, 2000)]
         private static void OpenWindow()
         {
             GetWindow<GroundTerrain>(true);
@@ -22,7 +22,7 @@ namespace GroundTerrain
                 return;
             }
 
-            if (Selection.activeGameObject == null)
+            if (!Selection.activeGameObject)
             {
                 EditorUtility.DisplayDialog("No object selected", "Please select an object.", "Ok");
                 return;
