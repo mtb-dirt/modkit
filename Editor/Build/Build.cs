@@ -2,6 +2,9 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.IO;
+using System.Text;
+using Src.Model;
+using Google.Protobuf;
 
 namespace Editor.Build
 {
@@ -43,7 +46,12 @@ namespace Editor.Build
                 return;
             }
 
+            ClearCache();
+            CreateDirectory();
+            BuildJson();
             BuildAssetBundle();
+
+            EditorUtility.DisplayDialog("Done", "Built successfully", "Ok");
         }
 
         private static GameObject FindPlayer()
@@ -101,15 +109,57 @@ namespace Editor.Build
             return $"{persistentDataPath.Substring(0, index)}{Path.AltDirectorySeparatorChar}{CompanyName}{Path.AltDirectorySeparatorChar}{ProductName}{Path.AltDirectorySeparatorChar}{SceneManager.GetActiveScene().name}";
         }
 
-        private void BuildAssetBundle()
+        private static string JsonPath(string persistentDataPath)
+        {
+            return $"{persistentDataPath}{Path.AltDirectorySeparatorChar}scene.json";
+        }
+
+        private static void ClearCache()
         {
             Caching.ClearCache();
+        }
 
+        private void CreateDirectory()
+        {
             if (!Directory.Exists(_path))
             {
                 Directory.CreateDirectory(_path);
             }
+        }
 
+        private void BuildJson()
+        {
+            var player = FindPlayer();
+            var playerPosition = player.transform.position;
+            var playerRotation = player.transform.rotation.eulerAngles;
+            var mod = new Mod
+            {
+                Name = _name,
+                Author = _author,
+                Player = new Player
+                {
+                    Position = new Coordinate
+                    {
+                        X = playerPosition.x,
+                        Y = playerPosition.y,
+                        Z = playerPosition.z
+                    },
+                    Rotation = new Coordinate
+                    {
+                        X = playerRotation.x,
+                        Y = playerRotation.y,
+                        Z = playerRotation.z
+                    }
+                }
+            };
+
+            using var writer = File.CreateText(JsonPath(_path));
+            writer.WriteLine(mod.ToString());
+            writer.Close();
+        }
+
+        private void BuildAssetBundle()
+        {
             FindPlayer().SetActive(false);
             BuildPipeline.BuildAssetBundles(_path, BuildAssetBundleOptions.None, BuildTarget.StandaloneWindows64);
             FindPlayer().SetActive(true);
