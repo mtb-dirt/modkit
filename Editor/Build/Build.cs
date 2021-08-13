@@ -106,7 +106,7 @@ namespace Editor.Build
                 break;
             }
 
-            return $"{persistentDataPath.Substring(0, index)}{Path.AltDirectorySeparatorChar}{CompanyName}{Path.AltDirectorySeparatorChar}{ProductName}{Path.AltDirectorySeparatorChar}{SceneManager.GetActiveScene().name}";
+            return $"{persistentDataPath.Substring(0, index)}{Path.AltDirectorySeparatorChar}{CompanyName}{Path.AltDirectorySeparatorChar}{ProductName}{Path.AltDirectorySeparatorChar}Mods{Path.AltDirectorySeparatorChar}{SceneManager.GetActiveScene().name}";
         }
 
         private static string JsonPath(string persistentDataPath)
