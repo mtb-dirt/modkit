@@ -2,11 +2,9 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.IO;
-using System.Text;
 using Src.Model;
-using Google.Protobuf;
 
-namespace Editor.Build
+namespace Src.Build
 {
     public class Build : EditorWindow
     {
