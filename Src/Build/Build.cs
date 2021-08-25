@@ -2,15 +2,18 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.IO;
-using Src.Model;
+using Protobuf;
 
 namespace Src.Build
 {
     public class Build : EditorWindow
     {
-        private string _name;
         private string _path;
+
+        private string _name;
         private string _author;
+        private string _description;
+        private string _version;
 
         private const string CompanyName = "Lucas Loeffel";
         private const string ProductName = "MTB Dirt";
@@ -24,6 +27,11 @@ namespace Src.Build
         private void OnGUI()
         {
             _author = EditorGUILayout.TextField("Author", _author);
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.LabelField("Description", GUILayout.MaxWidth(150.0f));
+            _description = EditorGUILayout.TextArea(_description, GUILayout.Height(100));
+            EditorGUILayout.EndHorizontal();
+            _version = EditorGUILayout.TextField("Version", _version);
             EditorGUILayout.LabelField("Map name", _name = SceneManager.GetActiveScene().name);
             EditorGUILayout.LabelField("Output path", _path = BundlePath(Application.persistentDataPath));
 
@@ -41,6 +49,18 @@ namespace Src.Build
             if (_author.Length == 0)
             {
                 EditorUtility.DisplayDialog("No author", "Author is required", "Ok");
+                return;
+            }
+
+            if (_description.Length == 0)
+            {
+                EditorUtility.DisplayDialog("No description", "Description is required", "Ok");
+                return;
+            }
+
+            if (_version.Length == 0 || !Semver.Semver.Validate(_version))
+            {
+                EditorUtility.DisplayDialog("No version", "Version is required and needs to be a semver version (semver.org)", "Ok");
                 return;
             }
 
@@ -70,11 +90,15 @@ namespace Src.Build
         private void OnEnable()
         {
             _author = EditorPrefs.GetString(EditorPrefsKey("Author"));
+            _description = EditorPrefs.GetString(EditorPrefsKey("Description"));
+            _version = EditorPrefs.GetString(EditorPrefsKey("Version"));
         }
 
         private void OnDisable()
         {
             EditorPrefs.SetString(EditorPrefsKey("Author"), _author);
+            EditorPrefs.SetString(EditorPrefsKey("Description"), _description);
+            EditorPrefs.SetString(EditorPrefsKey("Version"), _version);
         }
 
         private static string EditorPrefsKey(string key)
@@ -133,16 +157,19 @@ namespace Src.Build
             var mod = new Mod
             {
                 Name = _name,
-                Author = _author,
+                Description = _description.Trim(),
+                Version = _version.Trim(),
+                Author = _author.Trim(),
+
                 Player = new Player
                 {
-                    Position = new Coordinate
+                    Position = new Xyz
                     {
                         X = playerPosition.x,
                         Y = playerPosition.y,
                         Z = playerPosition.z
                     },
-                    Rotation = new Coordinate
+                    Rotation = new Xyz
                     {
                         X = playerRotation.x,
                         Y = playerRotation.y,
