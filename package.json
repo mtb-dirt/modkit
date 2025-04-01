@@ -1,15 +1,16 @@
 {
-    "name": "com.mtb-game.modkit",
-    "version": "0.2.0",
-    "displayName": "Modkit",
-    "description": "Official Modkit",
-    "unity": "2020.3",
-   "keywords": [
-      "modkit"
-    ],
-    "author": {
-      "name": "Lucas Löffel",
-      "email": "lucas@loeffel.io",
-      "url": "https://github.com/loeffel-io"
-    }
+  "name": "com.mtb-dirt.modkit",
+  "version": "0.3.0",
+  "displayName": "Modkit",
+  "description": "Official MTB Dirt Modkit",
+  "unity": "2022.3",
+  "keywords": [
+    "modkit",
+    "mtb-dirt"
+  ],
+  "author": {
+    "name": "Lucas Löffel",
+    "email": "lucas@loeffel.io",
+    "url": "https://github.com/loeffel-io"
   }
+}

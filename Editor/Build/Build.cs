@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 using System.IO;
 using Protobuf;
 
-namespace Src.Build
+namespace Modkit.Editor.Build
 {
     public class Build : EditorWindow
     {

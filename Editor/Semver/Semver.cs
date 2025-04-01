@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace Src.Semver
+namespace Modkit.Editor.Semver
 {
     public class Semver
     {

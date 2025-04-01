@@ -1,7 +1,9 @@
 {
-    "name": "NewAssembly",
-    "rootNamespace": "",
-    "references": [],
+    "name": "mtb-dirt.modkit.Editor",
+    "rootNamespace": "Modkit.Editor",
+    "references": [
+        "GUID:5be87fa212f73420a8aa8f15186dc13f"
+    ],
     "includePlatforms": [
         "Editor"
     ],
